@@ -1,0 +1,16 @@
+
+---------------raidHandler-----------------
+    private void updateFSQQ(DeviceRAID dev, UpdateObject obj){
+        RAIDDataKeys dataKey = obj.getRAIDDataKey();
+        ArrayList<CLIDataObject> addList = obj.getAddInfoList();
+        for(Iterator<CLIDataObject> it=addList.iterator(); it.hasNext(); ){
+            FSQQ fsQQ = (FSQQ)it.next();
+            FSQQJSON fsQQJson = new FSQQJSON(fsQQ);
+            jsonDataMgr.putObj(dataKey.key(), fsQQJson);
+
+            if(!dev.isDummy()) { fsQQJson.registerCLIDataObject(fsQQ); }
+        }
+
+        if(dev.isDummy()) { return; }
+    }
+

@@ -1,7 +1,6 @@
-var fs = require('fs');
-var key = 'FSWORMStatus';
-var keyLow = 'fsWORMStatus';
-var data = '    @POST\n'
+module.exports.raidDataResource = (key,keyLow)=>{
+var raiddata = '\n'
+	+'    @POST\n'
     +'    @Path("/'+keyLow+'")\n'
     +'    @Produces("application/json")\n'
     +'    @Consumes("application/json")\n'
@@ -47,5 +46,19 @@ var data = '    @POST\n'
 	+'        return retObj.toString();\n'
     +'    }\n'
 
+    var data = fs.readFileSync('D:/work/EonOne_WorkFlow_git2/src/com/infortrend/EonOne/raid/http/resources/RAIDDataResource.java').toString().split("\n");
+        var text = "";
+        for(line in data){
+          if(data[line].indexOf('nTag') !== -1){
+            data.splice(parseInt(line)+1, 0, raiddata);
+            text = data.join("\n");
+          }
+        }
 
-fs.appendFileSync('target.java','\n'+ data +'\n');
+
+        fs.writeFile('D:/work/EonOne_WorkFlow_git2/src/com/infortrend/EonOne/raid/http/resources/RAIDDataResource.java', text, function (err) {
+          if (err) return console.log(err);
+        });
+
+//fs.appendFileSync('born.txt','\n'+ data +'\n');
+}

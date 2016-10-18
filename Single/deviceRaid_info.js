@@ -1,13 +1,7 @@
-var fs = require('fs');
-var fsKey = 'FSWORMStatus';
-var cliCMD = ''
+module.exports.deviceRaid = (fsKey)=>{
+  
 
-
-fs.readFile('target.java', function(err, data) {
-  //data = data.toString();
-  var array = data.toString().split("\n");
-  var deviceRaidFunc = 
-  	'public void init'+ fsKey +'(int priority){\n'
+  var deviceRaidFunc = '\npublic void init'+ fsKey +'(int priority){\n'
         + '    UpdateObject obj = new UpdateObject(RAIDDataManager.RAIDDataKeys.'+ fsKey +');\n'
         + '    '+fsKey +' info = ('+ fsKey +') this.getDataObject(RAIDDataManager.RAIDDataKeys.'+ fsKey +'.code(), "'+ fsKey +'");\n'
         + '    if(info==null){\n'
@@ -21,12 +15,29 @@ fs.readFile('target.java', function(err, data) {
         + '        info.refreshAllData(priority);\n'
         + '        this.updateData(obj);\n'
         + '    }\n'
+        
+  var deviceRaidCase = '    case '+ fsKey +':\n'
+                    	+'            this.init'+ fsKey +'(priority);\n'
+                    	+'            break;'
 
-  var deviceRaidCase = 
-  +'        case '+ fsKey +':\n'
-	+'            this.init'+ fsKey +'(priority);\n'
-	+'            break;\n'
 
-   		fs.appendFileSync('target.java','\n'+ deviceRaidFunc +'\n');
-   		fs.appendFileSync('target.java','\n'+ deviceRaidCase +'\n');
-});
+        var data = fs.readFileSync('D:/work/AutoNasClass_git2/src/autoNasClass/raid/DeviceRaid.java').toString().split("\n");
+        var text = "";
+        for(line in data){
+          if(data[line].indexOf('nTag') !== -1){
+            data.splice(parseInt(line)+1, 0, deviceRaidFunc);
+          }
+          if(data[line].indexOf('n2Tag') !== -1){
+            data.splice(parseInt(line)+1, 0, deviceRaidCase);
+          }
+        }
+        text = data.join("\n");
+
+        fs.writeFile('D:/work/AutoNasClass_git2/src/autoNasClass/raid/DeviceRaid.java', text, function (err) {
+          if (err) return console.log(err);
+        });
+
+
+
+   		//fs.appendFileSync('born.txt','\n'+ deviceRaidFunc +'\n');
+}

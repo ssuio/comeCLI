@@ -1,6 +1,6 @@
 
 
-exports.readAFile =(a)=>{
+modules.exports.readAFile =(a)=>{
 	var fs = require('fs')
 	fs.readFile('readMe.txt', 'utf8', function (err,data) {
 	  if (err) {

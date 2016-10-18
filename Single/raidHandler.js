@@ -1,8 +1,9 @@
-var fs = require('fs');
 
-var key = 'FSWORMInfo';
-var keyLow = 'fsWORMInfo';
-var data = '    private void update'+key+'(DeviceRAID dev, UpdateObject obj){\n'
+module.exports.raidHandler = (key, keyLow)=>{
+var fs = require('fs');
+var data = '---------------raidHandler-----------------'
+  		+'\n'
+		+'    private void update'+key+'(DeviceRAID dev, UpdateObject obj){\n'
 		+'        RAIDDataKeys dataKey = obj.getRAIDDataKey();\n'
 		+'        ArrayList<CLIDataObject> addList = obj.getAddInfoList();\n'
 		+'        for(Iterator<CLIDataObject> it=addList.iterator(); it.hasNext(); ){\n'
@@ -16,8 +17,5 @@ var data = '    private void update'+key+'(DeviceRAID dev, UpdateObject obj){\n'
 		+'        if(dev.isDummy()) { return; }\n'
 	    +'    }\n'
 
-
-
-	fs.appendFileSync('target.java','\n'+ data +'\n');
-   	// if(array[i].indexOf('nCase') !== -1)
-   	// 	fs.appendFileSync('target.java','\n'+ deviceRaidCase +'\n');
+	fs.appendFileSync('born.txt','\n'+ data +'\n');
+}
